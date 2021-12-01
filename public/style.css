@@ -42,15 +42,13 @@ body {
     font-family: "Intro", serif;
 }
 
-.container .inline {
-    font-family: "Intro Inline", serif;
-}
-
 .container .yellow {
+    font-family: "Intro Inline", serif;
     color: #FEE440;
 }
 
 .container .orange {
+    font-family: "Intro Inline", serif;
     color: #EB5E28;
 }
 

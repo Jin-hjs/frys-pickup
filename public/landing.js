@@ -42,11 +42,11 @@ const staginglocationTexts = document.getElementsByClassName('stage'),
     updatePage = () => {
         const selectedTime = getCurrentTime();
 
-        staginglocationTexts[0].innerHTML = `<span class="inline yellow">${formatHour(selectedTime)}</span>s`;
-        hourTexts[0].innerHTML = `to <span class="inline yellow">${getStagingLocation(selectedTime)}</span>`;
+        staginglocationTexts[0].innerHTML = `<span class="yellow">${formatHour(selectedTime)}</span>s`;
+        hourTexts[0].innerHTML = `to <span class="yellow">${getStagingLocation(selectedTime)}</span>`;
 
-        staginglocationTexts[1].innerHTML = `<span class="inline orange">${formatHour(selectedTime + 1)}</span>s`;
-        hourTexts[1].innerHTML = `to <span class="inline orange">${getStagingLocation(selectedTime + 1)}</span>`;
+        staginglocationTexts[1].innerHTML = `<span class="orange">${formatHour(selectedTime + 1)}</span>s`;
+        hourTexts[1].innerHTML = `to <span class="orange">${getStagingLocation(selectedTime + 1)}</span>`;
     };
 
 updatePage();
