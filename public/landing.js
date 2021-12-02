@@ -1,6 +1,5 @@
 var currentOffset = 0,
     isSynced = true,
-    xPos = null,
     yPos = null;
 
 const staginglocationTexts = document.getElementsByClassName('stage'),
@@ -50,45 +49,48 @@ const staginglocationTexts = document.getElementsByClassName('stage'),
     startTouches = e => {
         const ogPosition = getTouches(e)[0];
 
-        // xPos = ogPosition.clientX;
         yPos = ogPosition.clientY;
 
         console.log(ogPosition)
     },
     updatePage = (offset = 0) => {
-        if (isSynced) {
-            const selectedTime = getCurrentTime();
+        const selectedTime = getCurrentTime();
 
-            currentOffset += offset;
+        currentOffset += offset;
 
-            staginglocationTexts[0].innerHTML = `<span class="yellow">${formatHour(selectedTime + currentOffset)}</span>s`;
-            hourTexts[0].innerHTML = `to <span class="yellow">${getStagingLocation(selectedTime + currentOffset)}</span>`;
+        staginglocationTexts[0].innerHTML = `<span class="yellow">${formatHour(selectedTime + currentOffset)}</span>s`;
+        hourTexts[0].innerHTML = `to <span class="yellow">${getStagingLocation(selectedTime + currentOffset)}</span>`;
 
-            staginglocationTexts[1].innerHTML = `<span class="orange">${formatHour(selectedTime + currentOffset + 1)}</span>s`;
-            hourTexts[1].innerHTML = `to <span class="orange">${getStagingLocation(selectedTime + currentOffset + 1)}</span>`;
-        }
+        staginglocationTexts[1].innerHTML = `<span class="orange">${formatHour(selectedTime + currentOffset + 1)}</span>s`;
+        hourTexts[1].innerHTML = `to <span class="orange">${getStagingLocation(selectedTime + currentOffset + 1)}</span>`;
     },
     updateTouches = e => {
-        if (!xPos || !yPos)
+        if (!yPos)
             return;
 
-        const yDiff = yPos - e.touches[0].clientY;
+        const yDiff = yPos - e.changedTouches[0].clientY;
 
-        if (yDiff > -10 && yDiff < 10) {
+        if (yDiff > -20 && yDiff < 20) {
             // tap
             isSynced = true;
+            currentOffset = 0;
             updatePage();
         } else if (yDiff > 0) {
-            // swiped down
-            isSynced = false;
-        } else {
             // swiped up
             isSynced = false;
+            updatePage(-1);
+        } else {
+            // swiped down
+            isSynced = false;
+            updatePage(1);
         }
     };
 
 updatePage();
-setInterval(updatePage, 1000);
+setInterval(() => {
+    if (isSynced)
+        updatePage();
+}, 1000);
 
 document.addEventListener('touchstart', startTouches, false);
-document.addEventListener('touchmove', updateTouches, false);
+document.addEventListener('touchend', updateTouches, false);
