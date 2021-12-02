@@ -78,11 +78,11 @@ const staginglocationTexts = document.getElementsByClassName('stage'),
         } else if (yDiff > 0) {
             // swiped up
             isSynced = false;
-            updatePage(-1);
+            updatePage(1);
         } else {
             // swiped down
             isSynced = false;
-            updatePage(1);
+            updatePage(-1);
         }
     };
 
